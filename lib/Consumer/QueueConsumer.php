@@ -26,13 +26,13 @@ abstract class QueueConsumer extends Consumer
     protected int $curl_connecttimeout = 300;
 
     /**
-     * Store our secret and options as part of this consumer
-     * @param string $secret
+     * Store our apiKey and options as part of this consumer
+     * @param string $apiKey
      * @param array $options
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
-        parent::__construct($secret, $options);
+        parent::__construct($apiKey, $options);
 
         if (isset($options['max_queue_size'])) {
             $this->max_queue_size = $options['max_queue_size'];

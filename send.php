@@ -62,7 +62,7 @@ $lines = explode("\n", $contents);
  * Initialize the client.
  */
 
-Segment::init($args['secret'], [
+Castled::init($args['secret'], [
     'debug' => true,
     'error_handler' => static function ($code, $msg) {
         print("$code: $msg\n");
@@ -89,7 +89,7 @@ foreach ($lines as $line) {
     $currentBatch[] = $payload;
     // flush before batch gets too big
     if (mb_strlen((json_encode(['batch' => $currentBatch, 'sentAt' => date('c')])), '8bit') >= 512000) {
-        $libCurlResponse = Segment::flush();
+        $libCurlResponse = Castled::flush();
         if ($libCurlResponse) {
             $successful += count($currentBatch) - 1;
         //} else {
@@ -98,10 +98,10 @@ foreach ($lines as $line) {
         $currentBatch = [];
     }
     $payload['timestamp'] = $ts;
-    call_user_func([Segment::class, $type], $payload);
+    call_user_func([Castled::class, $type], $payload);
 }
 
-$libCurlResponse = Segment::flush();
+$libCurlResponse = Castled::flush();
 if ($libCurlResponse) {
     $successful += $total - $successful;
 }

@@ -12,16 +12,16 @@ abstract class Consumer
      * @var array<string,mixed>
      */
     protected array $options;
-    protected string $secret;
+    protected string $apiKey;
 
     /**
      * Store our secret and options as part of this consumer
      * @param string $secret
      * @param array $options
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
-        $this->secret = $secret;
+        $this->apiKey = $apiKey;
         $this->options = $options;
     }
 
