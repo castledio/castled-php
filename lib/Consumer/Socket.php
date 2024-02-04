@@ -97,7 +97,7 @@ class Socket extends QueueConsumer
      */
     private function createBody(string $host, string $content)
     {
-        $req = "POST /v1/batch HTTP/1.1\r\n";
+        $req = "POST /external/v1/collections/batch'; HTTP/1.1\r\n";
         $req .= 'Host: ' . $host . "\r\n";
         $req .= "Content-Type: application/json\r\n";
         $req .= 'Authorization: Basic ' . base64_encode($this->secret . ':') . "\r\n";
