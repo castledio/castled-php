@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Segment\Segment;
+use Castled\Castled;
 
 /**
  * require client

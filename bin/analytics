@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Segment\Segment;
+use Castled\Castled;
 
 require __DIR__ . '/../bootstrap.php';
 

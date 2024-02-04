@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Test;
+namespace Castled\Test;
 
 use PHPUnit\Framework\TestCase;
 use Castled\Client;
