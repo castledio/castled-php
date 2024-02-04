@@ -19,7 +19,7 @@ class LibCurl extends QueueConsumer
     {
         $body = $this->payload($messages);
         $payload = json_encode($body);
-        $secret = $this->secret;
+        $apiKey = $this->apiKey;
 
         if ($this->compress_request) {
             $payload = gzencode($payload);
@@ -40,7 +40,7 @@ class LibCurl extends QueueConsumer
             $ch = curl_init();
 
             // set the url, number of POST vars, POST data
-            curl_setopt($ch, CURLOPT_USERPWD, $secret . ':');
+            curl_setopt($ch, CURLOPT_USERPWD, $apiKey . ':');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->curl_connecttimeout);

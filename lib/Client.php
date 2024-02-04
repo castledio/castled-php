@@ -15,15 +15,15 @@ class Client
     protected Consumer $consumer;
 
     /**
-     * Create a new analytics object with your app's secret
+     * Create a new analytics object with your app's apiKey
      * key
      *
-     * @param string $secret
+     * @param string $apiKey
      * @param array $options array of consumer options [optional]
      * @param string Consumer constructor to use, libcurl by default.
      *
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
 
         $consumers = [
@@ -40,13 +40,13 @@ class Client
                 throw new CastledException('Consumers must extend the Castled/Consumer/Consumer abstract class');
             }
             // Try to resolve it by class name
-            $this->consumer = new $consumer_type($secret, $options);
+            $this->consumer = new $consumer_type($apiKey, $options);
             return;
         }
 
         $Consumer = $consumers[$consumer_type];
 
-        $this->consumer = new $Consumer($secret, $options);
+        $this->consumer = new $Consumer($apiKey, $options);
     }
 
     public function __destruct()
