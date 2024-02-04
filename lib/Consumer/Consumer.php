@@ -15,8 +15,8 @@ abstract class Consumer
     protected string $apiKey;
 
     /**
-     * Store our secret and options as part of this consumer
-     * @param string $secret
+     * Store our apiKey and options as part of this consumer
+     * @param string $apiKey
      * @param array $options
      */
     public function __construct(string $apiKey, array $options = [])
