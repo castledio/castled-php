@@ -46,8 +46,10 @@ class LibCurl extends QueueConsumer
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->curl_connecttimeout);
 
             // set variables for headers
+
             $header = [];
             $header[] = 'Content-Type: application/json';
+            $header[] = "Api-Key: $apiKey";
 
             if ($this->compress_request) {
                 $header[] = 'Content-Encoding: gzip';

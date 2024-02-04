@@ -11,12 +11,12 @@ class Castled
     /**
      * Initializes the default client to use. Uses the libcurl consumer by default.
      *
-     * @param string $secret your project's secret key
+     * @param string $apiKey your project's apiKey key
      * @param array $options passed straight to the client
      */
     public static function init(string $apiKey, array $options = []): void
     {
-        self::assert($secret, 'Castled::init() requires secret');
+        self::assert($apiKey, 'Castled::init() requires apiKey');
         self::$client = new Client($apiKey, $options);
     }
 
@@ -42,7 +42,7 @@ class Castled
      */
     public static function track(array $message): bool
     {
-        self::checkClient();ggfd
+        self::checkClient();
         $event = !empty($message['event']);
         self::assert($event, 'Castled::track() expects an event');
         self::validate($message, 'track');
