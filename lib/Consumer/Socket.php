@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Consumer;
+namespace Castled\Consumer;
 
 class Socket extends QueueConsumer
 {
@@ -12,27 +12,27 @@ class Socket extends QueueConsumer
     /**
      * Creates a new socket consumer for dispatching async requests immediately.
      *
-     * @param string $secret
+     * @param string $apiKey
      * @param array $options
      *     number "timeout" - the timeout for connecting
      *     function "error_handler" - function called back on errors.
      *     bool "debug" - whether to use debug output, wait for response.
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
         if (!isset($options['timeout'])) {
             $options['timeout'] = 5;
         }
 
         if (!isset($options['host'])) {
-            $options['host'] = 'api.segment.io';
+            $options['host'] = 'api.castled.io';
         }
 
         if (!isset($options['tls'])) {
             $options['tls'] = '';
         }
 
-        parent::__construct($secret, $options);
+        parent::__construct($apiKey, $options);
     }
 
     public function flushBatch($batch): bool
@@ -97,10 +97,10 @@ class Socket extends QueueConsumer
      */
     private function createBody(string $host, string $content)
     {
-        $req = "POST /v1/batch HTTP/1.1\r\n";
+        $req = "POST /external/v1/collections/batch'; HTTP/1.1\r\n";
         $req .= 'Host: ' . $host . "\r\n";
         $req .= "Content-Type: application/json\r\n";
-        $req .= 'Authorization: Basic ' . base64_encode($this->secret . ':') . "\r\n";
+        $req .= 'Authorization: Basic ' . base64_encode($this->apiKey . ':') . "\r\n";
         $req .= "Accept: application/json\r\n";
 
         // Send user agent in the form of {library_name}/{library_version} as per RFC 7231.

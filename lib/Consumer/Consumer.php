@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Consumer;
+namespace Castled\Consumer;
 
 abstract class Consumer
 {
@@ -12,16 +12,16 @@ abstract class Consumer
      * @var array<string,mixed>
      */
     protected array $options;
-    protected string $secret;
+    protected string $apiKey;
 
     /**
-     * Store our secret and options as part of this consumer
-     * @param string $secret
+     * Store our apiKey and options as part of this consumer
+     * @param string $apiKey
      * @param array $options
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
-        $this->secret = $secret;
+        $this->apiKey = $apiKey;
         $this->options = $options;
     }
 

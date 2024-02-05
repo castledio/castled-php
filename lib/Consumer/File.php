@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Consumer;
+namespace Castled\Consumer;
 
 class File extends Consumer
 {
@@ -15,17 +15,17 @@ class File extends Consumer
 
     /**
      * The file consumer writes track and identify calls to a file.
-     * @param string $secret
+     * @param string $apiKey
      * @param array $options
      *     string "filename" - where to log the analytics calls
      */
-    public function __construct(string $secret, array $options = [])
+    public function __construct(string $apiKey, array $options = [])
     {
         if (!isset($options['filename'])) {
             $options['filename'] = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'analytics.log';
         }
 
-        parent::__construct($secret, $options);
+        parent::__construct($apiKey, $options);
 
         $this->file_handle = @fopen($options['filename'], 'ab');
         if ($this->file_handle === false) {

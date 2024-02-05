@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Consumer;
+namespace Castled\Consumer;
 
 class LibCurl extends QueueConsumer
 {
@@ -19,7 +19,7 @@ class LibCurl extends QueueConsumer
     {
         $body = $this->payload($messages);
         $payload = json_encode($body);
-        $secret = $this->secret;
+        $apiKey = $this->apiKey;
 
         if ($this->compress_request) {
             $payload = gzencode($payload);
@@ -28,9 +28,9 @@ class LibCurl extends QueueConsumer
         if ($this->host) {
             $host = $this->host;
         } else {
-            $host = 'api.segment.io';
+            $host = 'api.castled.io';
         }
-        $path = '/v1/batch';
+        $path = '/backend/external/v1/collections/batch';
         $url = $this->protocol . $host . $path;
 
         $backoff = 100; // Set initial waiting time to 100ms
@@ -40,14 +40,16 @@ class LibCurl extends QueueConsumer
             $ch = curl_init();
 
             // set the url, number of POST vars, POST data
-            curl_setopt($ch, CURLOPT_USERPWD, $secret . ':');
+            curl_setopt($ch, CURLOPT_USERPWD, $apiKey . ':');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->curl_connecttimeout);
 
             // set variables for headers
+
             $header = [];
             $header[] = 'Content-Type: application/json';
+            $header[] = "Api-Key: $apiKey";
 
             if ($this->compress_request) {
                 $header[] = 'Content-Encoding: gzip';
@@ -77,7 +79,7 @@ class LibCurl extends QueueConsumer
             //close connection
             curl_close($ch);
 
-            if ($responseCode !== 200) {
+            if ($responseCode < 200 || $responseCode > 299) {
                 // log error
                 $this->handleError($responseCode, $responseContent);
 

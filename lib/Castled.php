@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Segment;
+namespace Castled;
 
-class Segment
+class Castled
 {
     private static ?Client $client = null;
 
     /**
      * Initializes the default client to use. Uses the libcurl consumer by default.
      *
-     * @param string $secret your project's secret key
+     * @param string $apiKey your project's apiKey key
      * @param array $options passed straight to the client
      */
-    public static function init(string $secret, array $options = []): void
+    public static function init(string $apiKey, array $options = []): void
     {
-        self::assert($secret, 'Segment::init() requires secret');
-        self::$client = new Client($secret, $options);
+        self::assert($apiKey, 'Castled::init() requires apiKey');
+        self::$client = new Client($apiKey, $options);
     }
 
     /**
@@ -25,12 +25,12 @@ class Segment
      *
      * @param mixed $value
      * @param string $msg
-     * @throws SegmentException
+     * @throws CastledException
      */
     private static function assert($value, string $msg): void
     {
         if (empty($value)) {
-            throw new SegmentException($msg);
+            throw new CastledException($msg);
         }
     }
 
@@ -44,7 +44,7 @@ class Segment
     {
         self::checkClient();
         $event = !empty($message['event']);
-        self::assert($event, 'Segment::track() expects an event');
+        self::assert($event, 'Castled::track() expects an event');
         self::validate($message, 'track');
 
         return self::$client->track($message);
@@ -53,7 +53,7 @@ class Segment
     /**
      * Check the client.
      *
-     * @throws SegmentException
+     * @throws CastledException
      */
     private static function checkClient(): void
     {
@@ -61,7 +61,7 @@ class Segment
             return;
         }
 
-        throw new SegmentException('Segment::init() must be called before any other tracking method.');
+        throw new CastledException('Castled::init() must be called before any other tracking method.');
     }
 
     /**
@@ -74,7 +74,7 @@ class Segment
     {
         $userId = (array_key_exists('userId', $message) && (string)$message['userId'] !== '');
         $anonId = !empty($message['anonymousId']);
-        self::assert($userId || $anonId, "Segment::$type() requires userId or anonymousId");
+        self::assert($userId || $anonId, "Castled::$type() requires userId or anonymousId");
     }
 
     /**
@@ -102,7 +102,7 @@ class Segment
     {
         self::checkClient();
         $groupId = !empty($message['groupId']);
-        self::assert($groupId, 'Segment::group() expects a groupId');
+        self::assert($groupId, 'Castled::group() expects a groupId');
         self::validate($message, 'group');
 
         return self::$client->group($message);
@@ -147,7 +147,7 @@ class Segment
         self::checkClient();
         $userId = (array_key_exists('userId', $message) && (string)$message['userId'] !== '');
         $previousId = (array_key_exists('previousId', $message) && (string)$message['previousId'] !== '');
-        self::assert($userId && $previousId, 'Segment::alias() requires both userId and previousId');
+        self::assert($userId && $previousId, 'Castled::alias() requires both userId and previousId');
 
         return self::$client->alias($message);
     }

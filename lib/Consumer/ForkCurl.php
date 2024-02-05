@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Segment\Consumer;
+namespace Castled\Consumer;
 
 class ForkCurl extends QueueConsumer
 {
@@ -21,17 +21,17 @@ class ForkCurl extends QueueConsumer
 
         // Escape for shell usage.
         $payload = escapeshellarg($payload);
-        $secret = escapeshellarg($this->secret);
+        $apiKey = escapeshellarg($this->apiKey);
 
         if ($this->host) {
             $host = $this->host;
         } else {
-            $host = 'api.segment.io';
+            $host = 'api.castled.io';
         }
-        $path = '/v1/batch';
+        $path = '/external/v1/collections/batch';
         $url = $this->protocol . $host . $path;
 
-        $cmd = "curl -u $secret: -X POST -H 'Content-Type: application/json'";
+        $cmd = "curl -u $apiKey: -X POST -H 'Content-Type: application/json'";
 
         $tmpfname = '';
         if ($this->compress_request) {
