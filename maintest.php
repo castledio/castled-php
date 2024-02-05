@@ -26,6 +26,15 @@ try {
 
     echo $result ? "Event tracked successfully.\n" : "Failed to track event.\n";
 
+    $result1 = Castled::identify([
+        'userId' => '12345',
+        'traits' => [
+            'plan1' => 'value1'
+        ]
+    ]);
+
+    echo $result1 ? "User tracked successfully.\n" : "Failed to track user.\n";
+
     // Add more method calls as needed for testing
 } catch (CastledException $e) {
     echo "An error occurred: " . $e->getMessage() . "\n";
