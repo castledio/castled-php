@@ -76,7 +76,6 @@ class LibCurl extends QueueConsumer
 
             $responseCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-            echo "responseCode is $responseCode";
             //close connection
             curl_close($ch);
 
