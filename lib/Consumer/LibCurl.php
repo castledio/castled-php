@@ -78,6 +78,7 @@ class LibCurl extends QueueConsumer
 
             //close connection
             curl_close($ch);
+            echo "response code is $responseCode";
 
             if ($responseCode < 200 || $responseCode > 299) {
                 // log error
