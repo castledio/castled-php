@@ -30,7 +30,7 @@ class LibCurl extends QueueConsumer
         } else {
             $host = 'api.castled.io';
         }
-        $path = '/external/v1/collections/batch';
+        $path = '/backend/external/v1/collections/batch';
         $url = $this->protocol . $host . $path;
 
         $backoff = 100; // Set initial waiting time to 100ms
